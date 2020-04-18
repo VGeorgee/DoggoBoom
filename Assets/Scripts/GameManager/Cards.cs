@@ -81,6 +81,10 @@ public class Cards{
         return c;
     }
 
+    public List<Card> GetCards(){
+        return cards;
+    }
+
     public Card GetNonBombCard(){
         Card c = null;
         for(int i = 0; i < cards.Count; i++){

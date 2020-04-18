@@ -25,6 +25,18 @@ public class SceneLoaderScript : MonoBehaviour
         if(level.Equals("SuccessfulLogin")){
             SceneManager.LoadScene(0);
         }
+        if(level.Equals("EasyAIGame")){
+            StaticData.AI = 1;
+            SceneManager.LoadScene(3);
+        }
+        if(level.Equals("MediumAIGame")){
+            StaticData.AI = 2;
+            SceneManager.LoadScene(3);
+        }
+        if(level.Equals("HardAIGame")){
+            StaticData.AI = 3;
+            SceneManager.LoadScene(3);
+        }
     }
 
     public static void loadlevel(int i){

@@ -37,6 +37,16 @@ using System.Net;
         }
     }
 
+    [Serializable]
+    public class MultiplayerData {
+        public string username;
+        public string ip;
+
+        public override String ToString(){
+            return "{" + username + " " + ip + "}";
+        }
+    }
+
 public class Request : MonoBehaviour
 {
 

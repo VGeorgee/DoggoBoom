@@ -33,10 +33,9 @@ public abstract class Player : MonoBehaviour {
     }
     
     public virtual IEnumerator LetActivationOfSelectedCard(){
+        
         yield return new WaitUntil(() => this.activateCard == true || this.finishedDrawCardTurn == true);
     }
-
-
 
     public Card RemoveActiveCard(){
         Debug.Log("TRYING TO ACTIVATE CARD HERE ::::****"+ userName );

@@ -117,6 +117,9 @@ public class Game : MonoBehaviour{
 
         players[0].SetLastCardActive();
         players[1].SetLastCardActive();
+
+
+        ((AIPlayer) players[1]).InitiateAI(deck);
         //SetPlayerCardCounter();
         movingPlayer = players[movingPlayerIndex];
         ShowLastCard();
@@ -126,9 +129,7 @@ public class Game : MonoBehaviour{
 
             movingPlayer = players[movingPlayerIndex];
 
-            if(movingPlayer != mePlayer){
-                ((AIPlayer)movingPlayer).UpdateAI(numberOfMoves);
-            }
+
 
             while(numberOfMoves > 0 && numberOfLivingPlayers > 1){
                 
@@ -138,7 +139,9 @@ public class Game : MonoBehaviour{
                 SetChanceForBomb();
                 SetPlayerCardCounter();
                 
-                
+                if(movingPlayer is AIPlayer){
+                    ((AIPlayer)movingPlayer).UpdateAI(numberOfMoves);
+                }
 
                 Debug.Log("NUMBER OF MOVES:::::" + numberOfMoves);
                 StartCoroutine(movingPlayer.LetActivationOfSelectedCard());
@@ -247,7 +250,6 @@ public class Game : MonoBehaviour{
     //called on screen
     public void SetPlayerPutCard(){
         mePlayer.SetPlayerPutCard();
-        //SetPlayerCardCounter();
     }
 
     private void ShowLastCard(){

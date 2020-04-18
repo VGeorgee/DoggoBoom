@@ -10,22 +10,13 @@ public class ElementAppender : MonoBehaviour {
     public static string domain = "http://192.168.1.2:80";
     public static string api = "/api";
     public static string leaderboard = domain + api + "/leaderboard";
+    public static string multiplayer = domain + api + "/multiplayer";
     public List<Sprite> Sprites = new List<Sprite>(); //List of Sprites added from the Editor to be created as GameObjects at runtime
     public GameObject ParentPanel; //Parent Panel you want the new Images to be children of
     public GameObject imageToUse;
 
     public GameObject lastElement;
 
-    public void AddNewElement(){
-        var newobj = Instantiate(imageToUse, lastElement.transform, lastElement.transform);
-        newobj.transform.SetParent(ParentPanel.transform);
-        
-        newobj.transform.parent = lastElement.transform;
-        newobj.transform.position = lastElement.transform.position;
-        RectTransform rt = (RectTransform)newobj.transform;
-        rt.position +=  new Vector3(0, -rt.rect.height, 0);
-        lastElement = newobj;
-    }
     
     public void AddNewElement(LeaderboardData data){
         var newobj = Instantiate(imageToUse, lastElement.transform, lastElement.transform);
@@ -77,8 +68,28 @@ public class ElementAppender : MonoBehaviour {
             Debug.Log(err.Message);
         });
     }
-
-
+/*
+    public void LoadMultiplayerElements(){
+        RestClient.GetArray<MultiplayerData>(multiplayer)
+        .Then(response => {
+            
+            if(response == null) 
+                return;
+            LeaderboardData d = new LeaderboardData();
+            d.username = response[0].username;
+            d.points = response[0].ip;
+            setInitialElement(d);
+            for (int i = 1; i < response.Length; i++){
+                d = new LeaderboardData();
+                d.username = response[0].username;
+                d.points = response[0].ip;
+                AddNewElement(d);
+            }
+        }).Catch(err => {
+            Debug.Log(err.Message);
+        });
+    }
+*/
     void Start () {
         List<LeaderboardData> list = new List<LeaderboardData>();
         list.Add(new LeaderboardData() {

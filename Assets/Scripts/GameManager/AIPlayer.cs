@@ -12,9 +12,27 @@ public class AIPlayer : Player{
     private Cards deck;
     int numberOfMovesLeft;
 
+    private AI AIInstance;
+
     protected override void Start(){
         base.Start();
         Debug.Log("AI IS INSTANTIATED!!!");
+
+    }
+
+
+    public void InitiateAI(Cards deck){
+        this.deck = deck;
+        switch(StaticData.AI){
+            case 1: { AIInstance = new EasyAI(deck); break; }
+            case 2: { AIInstance = new MediumAI(deck); break; }
+            case 3: { AIInstance = new HardAI(deck); break; }
+            default: { break; }
+        }
+    }
+   
+    public void UpdateAI(int numberOfMoves = 1){
+        AIInstance.UpdateAI(GetNumberOfLifeCards() + 1, numberOfMoves, GetNumberOfAttackCards());
     }
 
     public override IEnumerator DrawCardFromDeck(){
@@ -22,49 +40,56 @@ public class AIPlayer : Player{
         yield break;
     }
 
-    private bool GetAIDecision(){
-        return Random.Range(0.0f, 100.0f) < 50.0f;  
-    }
-    public IEnumerator LetActivationOfSelectedCard2(){
-
-        if(GetNumberOfCards() == 0){
-            yield break;
-        }
-        
-        yield return new WaitForSeconds(Random.Range(0.5f, 3.5f));
-
-
-
-        activateCard = true;
-        //finishedDrawCardTurn = true;
-    }
-
     public override IEnumerator LetActivationOfSelectedCard(){
-        
-        yield return new WaitForSeconds(Random.Range(0.5f, 3.5f));
 
-        if(activeCard == null){
-            SetLastCardActive();
+        if(HaveAttackCard()){
+            Debug.Log("STARTING AI");
+            if(AIInstance.ShouldAttack()){
+                SetActiveCardAttackCard();
+                if(activeCard != null && !activeCard.isLifeCard){
+                    activateCard = true;
+                }
+            }
+            Debug.Log("AI FINISHED");
         }
-
-        if(activeCard != null && !activeCard.isLifeCard)
-            activateCard = true;
-
+        //yield return new WaitForSeconds(Random.Range(0.5f, 3.5f));
         finishedDrawCardTurn = true;
+        yield break;
     }
+
    protected override IEnumerator OnKillPlayer(bool isKilled){
        this.finishedKillTurn = true;
         yield break;
     }
 
-    public bool HaveAttackCard(){
+    private bool HaveAttackCard(){
         return cards.Find(x => x.isAttackCard == true) != null;
     }
 
-    public void SetActiveCardAttackCard(){
+    private void SetActiveCardAttackCard(){
         activeCardIndex = cards.FindIndex(x => x.isAttackCard == true);
         Debug.Log("INDEX OF ATTACK CARD FOUND:::: " + activeCardIndex);
         activeCard = cards[activeCardIndex];
+    }
+
+    private int GetNumberOfAttackCards(){
+        int numberOfAttackCards = 0;
+        for(int i = 0; i < deck.GetCards().Count; i++){
+            if(deck.GetCards()[i].isAttackCard){
+                numberOfAttackCards++;
+            }
+        }
+        return numberOfAttackCards;
+    }
+
+    private int GetNumberOfLifeCards(){
+        int numberOfLifeCards = 0;
+        for(int i = 0; i < deck.GetCards().Count; i++){
+            if(deck.GetCards()[i].isLifeCard){
+                numberOfLifeCards++;
+            }
+        }
+        return numberOfLifeCards;
     }
 
 
@@ -72,14 +97,5 @@ public class AIPlayer : Player{
         Debug.Log("I AM AI PLAYER!!!!!!!+++++++_____");
         return userName;
     }
-
-    public void InitializeAI(Cards deck){
-        this.deck = deck;
-    }
-
-    public void UpdateAI(int numberOfMovesLeft){
-        this.numberOfMovesLeft = numberOfMovesLeft;
-    }
-
 
 }

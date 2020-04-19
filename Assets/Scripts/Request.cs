@@ -160,7 +160,8 @@ public class Request : MonoBehaviour
            debugField.text = err.Message;
         });
     }
-        public static void UpdateLeaderboardData(string username, int points){
+
+    public static void UpdateLeaderboardData(string username, int points){
         RestClient.Post<MessageResponse>(leaderboard, new LeaderboardData{
             username = username,
             points = points

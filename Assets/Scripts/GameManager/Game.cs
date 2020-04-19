@@ -196,9 +196,13 @@ public class Game : MonoBehaviour{
             NextPlayer();
         }
 
-        SetWinner(players[movingPlayerIndex].userName);
+
+        Player winner = players[movingPlayerIndex];
+
+        SetWinner(winner.userName);
         endOfGamePanel.gameObject.SetActive(true);
-        Request.UpdateLeaderboardData(players[movingPlayerIndex].userName, 100);
+        int winnerPoints = (winner.GetNumberOfCards() * 50) + (winner.GetNumberOfAttackCards() * 100);
+        Request.UpdateLeaderboardData(winner.userName, winnerPoints);
         yield break;
     }
 

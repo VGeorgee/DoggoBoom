@@ -7,8 +7,6 @@ public class MenuMover : MonoBehaviour
 {
     
     public Text buttonText;
-
-
     public InputField usernameField;
     public InputField passwordField;
     public GameObject panel;
@@ -55,16 +53,8 @@ public class MenuMover : MonoBehaviour
         isLoading = true;
         pageLoaded = !pageLoaded;
         return;
-        /*
-        if(pageLoaded){
-            pageLoaded =  !pageLoaded;
-            rt.position = Vector3.Lerp(right, left, 0.5f);
-        } else{
-            pageLoaded = !pageLoaded;
-            rt.position = Vector3.Lerp(right, left, 0.5f);
-        }
-        */
     }
+
     void Update () {
         if(isLoading){
             float step = (speed * Time.deltaTime);// + 0.1f;

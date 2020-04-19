@@ -72,16 +72,6 @@ public class AIPlayer : Player{
         activeCard = cards[activeCardIndex];
     }
 
-    private int GetNumberOfAttackCards(){
-        int numberOfAttackCards = 0;
-        for(int i = 0; i < deck.GetCards().Count; i++){
-            if(deck.GetCards()[i].isAttackCard){
-                numberOfAttackCards++;
-            }
-        }
-        return numberOfAttackCards;
-    }
-
     private int GetNumberOfLifeCards(){
         int numberOfLifeCards = 0;
         for(int i = 0; i < deck.GetCards().Count; i++){

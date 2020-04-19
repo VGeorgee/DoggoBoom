@@ -90,5 +90,17 @@ public abstract class Player : MonoBehaviour {
             activeCard = null;
         }
     }
+
+    public int GetNumberOfAttackCards(){
+        int numberOfAttackCards = 0;
+        for(int i = 0; i < cards.Count; i++){
+            if(cards[i].isAttackCard){
+                numberOfAttackCards++;
+            }
+        }
+        return numberOfAttackCards;
+    }
+
+
     public abstract string NotifyUser();
 }

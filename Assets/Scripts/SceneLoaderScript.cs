@@ -26,15 +26,15 @@ public class SceneLoaderScript : MonoBehaviour
             SceneManager.LoadScene(0);
         }
         if(level.Equals("EasyAIGame")){
-            StaticData.AI = 1;
+            StaticData.GetInstance().AI = 1;
             SceneManager.LoadScene(2);
         }
         if(level.Equals("MediumAIGame")){
-            StaticData.AI = 2;
+            StaticData.GetInstance().AI = 2;
             SceneManager.LoadScene(2);
         }
         if(level.Equals("HardAIGame")){
-            StaticData.AI = 3;
+            StaticData.GetInstance().AI = 3;
             SceneManager.LoadScene(2);
         }
     }

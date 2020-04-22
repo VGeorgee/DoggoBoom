@@ -10,9 +10,9 @@ public class HardAI : AI {
     }
 
     public override bool ShouldAttack(){
-        bool attack = CalculateMiniMax(true, this.numberOfMoves, this.numberOfAttackCards, 1, this.lives, 1, 0);
-        Debug.Log("HENLO AM I CAN WIN??? " + attack + " -- WITH DIS MUV::::::::::::" + attackedbool);
-        return attackedbool;
+        bool winnable = CalculateMiniMax(true, this.numberOfMoves, this.numberOfAttackCards, 1, this.lives, 1, 0);
+        Debug.Log("ability to win:" + winnable + " have to attack: " + attackedbool);
+        return (this.lives == 1 && GetCardAtIndex(0).isBombCard) || attackedbool;
     }
 
     public Card GetCardAtIndex(int index){

@@ -68,17 +68,13 @@ public class Request : MonoBehaviour
 
     public void DoIt(){
         if(buttonText.text == "Register"){
-            Debug.Log("Register");
             Register();
         }
         else if(buttonText.text == "Login"){
-            Debug.Log("Register");
             Login();
         }
     }
     public void Login(){
-        //Debug.Log("fields: " + usernameField.text + " " + passwordField.text);
-        //StartCoroutine(LoginRequest(usernameField.text ?? "asd", passwordField.text ?? "bsd"));
         LoginRequest(usernameField.text, passwordField.text);
     }
 
@@ -87,27 +83,11 @@ public class Request : MonoBehaviour
         RegisterRequest(usernameField.text, passwordField.text);
     }
 
-    public void DebugMe(){
-        LoginRequest(usernameField.text, passwordField.text);
-        /*
-        Debug.Log("send");
-        RestClient.Post<RegistrationResponse>(login, new User {
-            username = "asd",
-            password = "asd"
-        }).Then(response => {
-            Debug.Log(response.message);
-            debugField.text = response.message;
-        }).Catch(err => {
-           debugField.text = err.Message;
-        });
-        */
-    }
     public void RegisterRequest(string username, string password) {
         RestClient.Post<MessageResponse>(register, new User {
             username = username,
             password = password
         }).Then(response => {
-            Debug.Log(response.message);
             debugField.text = response.message;
         }).Catch(err => {
            debugField.text = err.Message;
@@ -118,11 +98,10 @@ public class Request : MonoBehaviour
             username = username,
             password = password
         }).Then(response => {
-            Debug.Log(response.message);
             debugField.text = response.message;
 
             if(response.message == "SUCCESS"){
-                StaticData.username = username;
+                StaticData.GetInstance().username = username;
                 SceneLoaderScript.loadlevel(1);
             }
 

@@ -100,7 +100,7 @@ public class Cards{
     public float GetChanceOfBomb(){
         return numberOfBombCards / (float)cards.Count;
     }
-
+    
     public float GetChanceOfAttackCard(){
         return numberOfAttackCards / (float)cards.Count;
     }

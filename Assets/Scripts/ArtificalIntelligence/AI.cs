@@ -13,6 +13,7 @@ public abstract class AI {
     }
 
     public abstract bool ShouldAttack();
+    
     public void UpdateAI(int lives = 1, int numberOfMoves = 1, int numberOfAttackCards = 0){
         this.lives = lives;
         this.numberOfMoves = numberOfMoves;

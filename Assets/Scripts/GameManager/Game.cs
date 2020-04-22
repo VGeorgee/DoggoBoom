@@ -36,15 +36,12 @@ public class Game : MonoBehaviour{
 
 
     void StartDesiredGame(){
-        switch (StaticData.gameplayMode)
+        switch (StaticData.GetInstance().gameplayMode)
         {
             case 0: { StartAIGame();  break; }
             default: break;
         }
     }
-
-
-
 
     void InitScene(){
         cardInHandImage.sprite = lifeCardImage[0];
@@ -56,13 +53,12 @@ public class Game : MonoBehaviour{
 
         players = new Player[2];
         players[0] = mep.GetComponent<MePlayer>();
-        players[0].userName = StaticData.username;
+        players[0].userName = StaticData.GetInstance().username;
         players[1] = AI.GetComponent<AIPlayer>();
         players[1].userName = "AI";
 
         deck = new Cards(3, 1);
         deck.Shuffle();
-        Debug.Log("Finished SHUFFLE!");
 
 
         mePlayer = (MePlayer)players[0];
@@ -105,7 +101,7 @@ public class Game : MonoBehaviour{
             if(lifeCard != null){
                 players[i].AddCard(lifeCard);
             } else {
-                Debug.Log("LIFE CARD NOT FOUND _:_:_:__:_::_:_:_:_:_:_:_:_:_:_:_:_:_:_:_:_:_:_:_:_:_");
+                Debug.Log("LIFE CARD NOT FOUND");
             }
         }
         
@@ -129,8 +125,6 @@ public class Game : MonoBehaviour{
 
             movingPlayer = players[movingPlayerIndex];
 
-
-
             while(numberOfMoves > 0 && numberOfLivingPlayers > 1){
                 
                 
@@ -143,23 +137,22 @@ public class Game : MonoBehaviour{
                     ((AIPlayer)movingPlayer).UpdateAI(numberOfMoves);
                 }
 
-                Debug.Log("NUMBER OF MOVES:::::" + numberOfMoves);
+                //Debug.Log("NUMBER OF MOVES:::::" + numberOfMoves);
                 StartCoroutine(movingPlayer.LetActivationOfSelectedCard());
                 yield return new WaitUntil(() => movingPlayer.activateCard == true || movingPlayer.finishedDrawCardTurn == true);
 
 
 
-                //ChangeSelectedCard(0);
                 if(movingPlayer.activateCard == true ){
                     Card activatedCard = movingPlayer.RemoveActiveCard();
-                    Debug.Log("ACTIVATED CARD" + movingPlayer.userName + "::: :::: :::: :::: " + activatedCard);
+                    //Debug.Log("ACTIVATED CARD" + movingPlayer.userName + "::: :::: :::: :::: " + activatedCard);
 
                     if(activatedCard != null){
                         ShowLastCard();
                         SetPlayerCardCounter();
 
                         if(activatedCard.isAttackCard){
-                            Debug.Log("ACTIVATED AN ATTACK CARD, TURN IS OVER!!!");
+                            //Debug.Log("ACTIVATED AN ATTACK CARD, TURN IS OVER!!!");
                             break;
                         }
 
@@ -178,17 +171,16 @@ public class Game : MonoBehaviour{
                     
                     if(movingPlayer.isAlive){
                         deck.PutDrawnCardBack(drawn);
-                        Debug.Log("PLAYER DRAWN BOMB BUT ALIVE::: " + movingPlayer.userName);
+                       // Debug.Log("PLAYER DRAWN BOMB BUT ALIVE::: " + movingPlayer.userName);
                     } else {
                         numberOfLivingPlayers--;
-                        Debug.Log("PLAYER KILLED::: " + movingPlayer.userName);
+                       // Debug.Log("PLAYER KILLED::: " + movingPlayer.userName);
                     }
                 } else {
                     movingPlayer.AddCard(drawn);
                 }
 
                 ShowLastCard();
-                //ChangeSelectedCard(0);
                 numberOfMoves--;
             }
 
@@ -225,7 +217,6 @@ public class Game : MonoBehaviour{
     }
 
     public void ChangeSelectedCard(int i){
-        //if(movingPlayer != mePlayer) return;
 
         Card selectedCard = mePlayer.ChangeSelectedCard(i);
         cardInHandImage.gameObject.SetActive(selectedCard != null);

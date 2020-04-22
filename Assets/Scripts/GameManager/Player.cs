@@ -38,9 +38,8 @@ public abstract class Player : MonoBehaviour {
     }
 
     public Card RemoveActiveCard(){
-        Debug.Log("TRYING TO ACTIVATE CARD HERE ::::****"+ userName );
         if(activeCard != null){
-            Debug.Log("ACTIVATED CARD HERE ::::****"+ userName + "**** " + activeCard);
+            Debug.Log("ACTIVATED CARD HERE:"+ userName + " " + activeCard);
             Card toRemove = activeCard;
             cards.RemoveAt(activeCardIndex);
             SetLastCardActive();
@@ -53,7 +52,6 @@ public abstract class Player : MonoBehaviour {
         Card lifeCard = cards.Find(element => element.isLifeCard == true);
         if(lifeCard != null){
             cards.Remove(lifeCard);
-            Debug.Log("PLAYER " + this.userName + " FOUND A LIFE CARD!! LUCKY BASTARD");
         }
         else {
             isAlive = false;
@@ -72,8 +70,9 @@ public abstract class Player : MonoBehaviour {
     }
 
     public void AddCard(Card card){
-        if(card != null)
+        if(card != null){
             cards.Add(card);
+        }
     }
 
     public int GetNumberOfCards(){

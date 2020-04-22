@@ -8,7 +8,6 @@ using Proyecto26;
 
 public class AIPlayer : Player{
 
-
     private Cards deck;
     int numberOfMovesLeft;
 
@@ -20,10 +19,9 @@ public class AIPlayer : Player{
 
     }
 
-
     public void InitiateAI(Cards deck){
         this.deck = deck;
-        switch(StaticData.AI){
+        switch(StaticData.GetInstance().AI){
             case 1: { AIInstance = new EasyAI(deck); break; }
             case 2: { AIInstance = new MediumAI(deck); break; }
             case 3: { AIInstance = new HardAI(deck); break; }
@@ -42,17 +40,19 @@ public class AIPlayer : Player{
 
     public override IEnumerator LetActivationOfSelectedCard(){
 
+        yield return new WaitForSeconds(Random.Range(0.5f, 3.5f));
         if(HaveAttackCard()){
-            Debug.Log("STARTING AI");
             if(AIInstance.ShouldAttack()){
                 SetActiveCardAttackCard();
                 if(activeCard != null && !activeCard.isLifeCard){
                     activateCard = true;
+                    Debug.Log("AI GONNA ATTACK!");
                 }
+                
+            } else {
+                    Debug.Log("AI'nt GONNA ATTACK!");
             }
-            Debug.Log("AI FINISHED");
         }
-        //yield return new WaitForSeconds(Random.Range(0.5f, 3.5f));
         finishedDrawCardTurn = true;
         yield break;
     }
@@ -68,7 +68,6 @@ public class AIPlayer : Player{
 
     private void SetActiveCardAttackCard(){
         activeCardIndex = cards.FindIndex(x => x.isAttackCard == true);
-        Debug.Log("INDEX OF ATTACK CARD FOUND:::: " + activeCardIndex);
         activeCard = cards[activeCardIndex];
     }
 
@@ -84,7 +83,7 @@ public class AIPlayer : Player{
 
 
     public override string NotifyUser(){
-        Debug.Log("I AM AI PLAYER!!!!!!!+++++++_____");
+        Debug.Log("AI PLAYER");
         return userName;
     }
 

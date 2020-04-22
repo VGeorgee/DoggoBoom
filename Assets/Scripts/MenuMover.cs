@@ -14,7 +14,6 @@ public class MenuMover : MonoBehaviour
     RectTransform rt;
     Vector3 left;
     Vector3 right;
-
     public bool isLoading;
 
     float speed = 4.0f;
@@ -57,7 +56,7 @@ public class MenuMover : MonoBehaviour
 
     void Update () {
         if(isLoading){
-            float step = (speed * Time.deltaTime);// + 0.1f;
+            float step = (speed * Time.deltaTime);
             if(!pageLoaded){
                 rt.position = Vector3.Lerp(rt.position, right, step);
                 if(rt.position == right){
@@ -69,8 +68,6 @@ public class MenuMover : MonoBehaviour
                     isLoading = false;
                 }
             }
-
         }
     }
-
 }

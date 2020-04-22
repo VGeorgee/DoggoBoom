@@ -11,11 +11,10 @@ public class MePlayer : Player {
     protected override void Start(){
         base.Start();
         
-        Debug.Log("MEPLAYER IS INSTANTIATED!!!");
+        Debug.Log("ME PLAYER IS INSTANTIATED!!!");
     }
 
    protected override IEnumerator OnKillPlayer(bool isKilled){
-        Debug.Log("am  i killed? " + isKilled );
         yield return new WaitUntil(() => this.finishedKillTurn == true);
     }
     public void SetPlayerPutCard(){
@@ -32,7 +31,7 @@ public class MePlayer : Player {
     }
 
     public override string NotifyUser(){
-        Debug.Log("I AM MEEEE PLAYER!!!!!!!+++++++_____");
+        Debug.Log("ME PLAYER");
         return userName;
     }
 

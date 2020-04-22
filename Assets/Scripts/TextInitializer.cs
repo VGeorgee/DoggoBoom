@@ -8,7 +8,7 @@ public class TextInitializer : MonoBehaviour
     public Text field;
     void Start()
     {
-        field.text = StaticData.username;
+        field.text = StaticData.GetInstance().username;
     }
 
 }

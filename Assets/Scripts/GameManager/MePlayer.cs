@@ -14,9 +14,7 @@ public class MePlayer : Player {
         Debug.Log("ME PLAYER IS INSTANTIATED!!!");
     }
 
-   protected override IEnumerator OnKillPlayer(bool isKilled){
-        yield return new WaitUntil(() => this.finishedKillTurn == true);
-    }
+
     public void SetPlayerPutCard(){
         if(activeCard != null && !activeCard.isLifeCard){
             this.activateCard = true;

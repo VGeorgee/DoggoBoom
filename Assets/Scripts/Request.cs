@@ -68,6 +68,7 @@ public class Request : MonoBehaviour
 
     public void DoIt(){
         if(buttonText.text == "Register"){
+            Debug.Log("REGISTERING");
             Register();
         }
         else if(buttonText.text == "Login"){
@@ -88,9 +89,10 @@ public class Request : MonoBehaviour
             username = username,
             password = password
         }).Then(response => {
-            debugField.text = response.message;
+            
+            Debug.Log("REGISTERED Actually" + response.message);
         }).Catch(err => {
-           debugField.text = err.Message;
+           Debug.Log(err.Message);
         });
     }
     public void LoginRequest(string username, string password) {
@@ -98,7 +100,7 @@ public class Request : MonoBehaviour
             username = username,
             password = password
         }).Then(response => {
-            debugField.text = response.message;
+            Debug.Log("REGISTERED Actually" + response.message);
 
             if(response.message == "SUCCESS"){
                 StaticData.GetInstance().username = username;
@@ -106,7 +108,7 @@ public class Request : MonoBehaviour
             }
 
         }).Catch(err => {
-           debugField.text = err.Message;
+            Debug.Log("REGISTERED Actually" + err.Message);
         });
     }
     public void GetLeaderboardData(){

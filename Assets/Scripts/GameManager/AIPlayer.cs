@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,7 +9,6 @@ public class AIPlayer : Player{
 
     private Cards deck;
     int numberOfMovesLeft;
-
     private AI AIInstance;
 
     protected override void Start(){
@@ -65,7 +63,6 @@ public class AIPlayer : Player{
     private bool HaveAttackCard(){
         return cards.Find(x => x.isAttackCard == true) != null;
     }
-
     private void SetActiveCardAttackCard(){
         activeCardIndex = cards.FindIndex(x => x.isAttackCard == true);
         activeCard = cards[activeCardIndex];

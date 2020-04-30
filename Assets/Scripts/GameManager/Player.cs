@@ -33,7 +33,6 @@ public abstract class Player : MonoBehaviour {
     }
     
     public virtual IEnumerator LetActivationOfSelectedCard(){
-        
         yield return new WaitUntil(() => this.activateCard == true || this.finishedDrawCardTurn == true);
     }
 
@@ -61,8 +60,9 @@ public abstract class Player : MonoBehaviour {
         yield break;
     }
 
-    protected abstract IEnumerator OnKillPlayer(bool isKilled);
-
+    protected virtual IEnumerator OnKillPlayer(bool isKilled){
+        yield return new WaitUntil(() => this.finishedKillTurn == true);
+    }
     public void StartTurn(){
         finishedDrawCardTurn = false;
         activateCard = false;

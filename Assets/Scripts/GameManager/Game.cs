@@ -95,7 +95,6 @@ public class Game : MonoBehaviour{
 
         yield return new WaitForSeconds(0.1f);
 
-
         for(int i = 0; i < 2; i++){
             Card lifeCard = deck.GetLifeCard();
             if(lifeCard != null){
@@ -126,7 +125,6 @@ public class Game : MonoBehaviour{
             movingPlayer = players[movingPlayerIndex];
 
             while(numberOfMoves > 0 && numberOfLivingPlayers > 1){
-                
                 
                 turnOfPlayer.text = movingPlayer.NotifyUser();
                 movingPlayer.StartTurn();
@@ -193,7 +191,7 @@ public class Game : MonoBehaviour{
 
         SetWinner(winner.userName);
         endOfGamePanel.gameObject.SetActive(true);
-        int winnerPoints = (winner.GetNumberOfCards() * 50) + (winner.GetNumberOfAttackCards() * 100);
+        int winnerPoints = 500 + (winner.GetNumberOfCards() * 50) + (winner.GetNumberOfAttackCards() * 100);
         Request.UpdateLeaderboardData(winner.userName, winnerPoints);
         yield break;
     }
@@ -215,28 +213,25 @@ public class Game : MonoBehaviour{
         mePlayer.SetPlayerKillTurn();
         bombPanel.gameObject.SetActive(false);
     }
-
-    public void ChangeSelectedCard(int i){
-
-        Card selectedCard = mePlayer.ChangeSelectedCard(i);
-        cardInHandImage.gameObject.SetActive(selectedCard != null);
-        if(selectedCard != null){
-            if(selectedCard.isLifeCard){
-                cardInHandImage.sprite = GetRandomSpriteFromArray(lifeCardImage);
-                activatedCardName.text = "Life";
-            }
-            else if(selectedCard.isUselessCard){
-                cardInHandImage.sprite = GetRandomSpriteFromArray(UselessCardImage);
-                activatedCardName.text = "Useless";
-            }
-            else if(selectedCard.isAttackCard){
-                cardInHandImage.sprite = GetRandomSpriteFromArray(AttackCardImage);
-                activatedCardName.text = "Attack";
-            }
+public void ChangeSelectedCard(int i){
+    Card selectedCard = mePlayer.ChangeSelectedCard(i);
+    cardInHandImage.gameObject.SetActive(selectedCard != null);
+    if(selectedCard != null){
+        if(selectedCard.isLifeCard){
+            cardInHandImage.sprite = GetRandomSpriteFromArray(lifeCardImage);
+            activatedCardName.text = "Life";
         }
-        SetPlayerCardCounter();
+        else if(selectedCard.isUselessCard){
+            cardInHandImage.sprite = GetRandomSpriteFromArray(UselessCardImage);
+            activatedCardName.text = "Useless";
+        }
+        else if(selectedCard.isAttackCard){
+            cardInHandImage.sprite = GetRandomSpriteFromArray(AttackCardImage);
+            activatedCardName.text = "Attack";
+        }
     }
-
+    SetPlayerCardCounter();
+}
     public void SetPlayerCardCounter(){
         numberOfCardsInHand.text = "Cards: " + mePlayer.GetNumberOfCards();
         activeCardNumber.text = "Active: " + (mePlayer.activeCardIndex + 1);

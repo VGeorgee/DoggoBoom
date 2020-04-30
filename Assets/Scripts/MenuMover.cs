@@ -51,7 +51,6 @@ public class MenuMover : MonoBehaviour
     public void MovePanel(){     
         isLoading = true;
         pageLoaded = !pageLoaded;
-        return;
     }
 
     void Update () {
